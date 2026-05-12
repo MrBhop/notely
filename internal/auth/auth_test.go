@@ -1,33 +1,33 @@
 package auth
 
 import (
-	"testing"
 	"net/http"
+	"testing"
 )
 
 func TestGetApiKey(t *testing.T) {
-	cases := []struct{
-		input http.Header
+	cases := []struct {
+		input       http.Header
 		expectError bool
-		want string
+		want        string
 	}{
 		{
-			input: http.Header{"Authorization": {"ApiKey key"},},
+			input:       http.Header{"Authorization": {"ApiKey key"}},
 			expectError: false,
-			want: "key",
+			want:        "key",
 		},
 		{
-			input: http.Header{"Authorization": {"key"},},
+			input:       http.Header{"Authorization": {"key"}},
 			expectError: true,
-			want: "",
+			want:        "",
 		},
 		{
-			input: http.Header{},
+			input:       http.Header{},
 			expectError: true,
-			want: "",
+			want:        "",
 		},
 	}
-	
+
 	for _, tc := range cases {
 		apiKey, err := GetAPIKey(tc.input)
 		if tc.expectError && err == nil {
